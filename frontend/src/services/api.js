@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Users, PlusCircle, Edit2, Trash2, LogOut, Lock, User, CheckCircle, Clock, TrendingUp, AlertCircle } from 'lucide-react';
 
-// API Configuration
 const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
 
-// API Service with proper error handling
 const api = {
   login: async (email, password) => {
     try {
@@ -22,7 +20,6 @@ const api = {
       
       const data = await response.json();
       
-      // Store token and user info
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
       
@@ -35,7 +32,6 @@ const api = {
 
   signup: async (email, password, name) => {
     try {
-      // Determine role based on email
       const role = email.toLowerCase().includes('admin') ? 'ADMIN' : 'USER';
       
       const response = await fetch(`${API_BASE_URL}/auth/signup`, {
@@ -51,12 +47,10 @@ const api = {
       
       const data = await response.json();
       
-      // Override role if backend doesn't set it based on email
       if (email.toLowerCase().includes('admin') && data.user.role !== 'ADMIN') {
         data.user.role = 'ADMIN';
       }
       
-      // Store token and user info
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
       
@@ -131,8 +125,7 @@ vote: async (pollId, optionId) => {
   }
   
   return response.json();
-}
-
+},
 
   deletePoll: async (pollId) => {
     try {
@@ -159,17 +152,14 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   
-  // Auth states
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   
-  // Poll creation states
   const [newPollQuestion, setNewPollQuestion] = useState('');
   const [newPollOptions, setNewPollOptions] = useState(['', '']);
   const [pollDuration, setPollDuration] = useState('24');
 
-  // Check for saved user on mount
   useEffect(() => {
     const savedUser = localStorage.getItem('user');
     const savedToken = localStorage.getItem('token');
@@ -181,7 +171,6 @@ const App = () => {
     }
   }, []);
 
-  // Load polls when user is logged in
   useEffect(() => {
     if (currentUser) {
       loadPolls();
@@ -356,7 +345,6 @@ const App = () => {
     }));
   };
 
-  // Login/Signup View
   if (!currentUser) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center p-4">
@@ -492,7 +480,6 @@ const App = () => {
     );
   }
 
-  // Main App View
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
       {/* Header */}

@@ -19,25 +19,25 @@ public class PollController {
 
     private final PollService pollService;
 
-    // ✅ Get all polls
+    //  Get all polls
     @GetMapping
     public ResponseEntity<List<PollResponse>> getAllPolls(Authentication auth) {
         return ResponseEntity.ok(pollService.getAllPolls(auth.getName()));
     }
 
-    // ✅ Get single poll by ID
+    //  Get single poll by ID
     @GetMapping("/{pollId}")
     public ResponseEntity<PollResponse> getPollById(@PathVariable Long pollId, Authentication auth) {
         return ResponseEntity.ok(pollService.getPollById(pollId, auth.getName()));
     }
 
-    // ✅ Create new poll (Admin only)
+    //  Create new poll (Admin only)
     @PostMapping
     public ResponseEntity<PollResponse> createPoll(@RequestBody PollRequest request, Authentication auth) {
         return ResponseEntity.ok(pollService.createPoll(request, auth.getName()));
     }
 
-    // ✅ Update an existing poll (Admin only)
+    //  Update an existing poll (Admin only)
     @PutMapping("/{pollId}")
     public ResponseEntity<PollResponse> updatePoll(
             @PathVariable Long pollId,
@@ -46,7 +46,7 @@ public class PollController {
         return ResponseEntity.ok(pollService.updatePoll(pollId, request, auth.getName()));
     }
 
-    // ✅ Close a poll (Admin only)
+    //  Close a poll (Admin only)
     @PostMapping("/{pollId}/close")
     public ResponseEntity<PollResponse> closePoll(
             @PathVariable Long pollId,
@@ -54,7 +54,7 @@ public class PollController {
         return ResponseEntity.ok(pollService.closePoll(pollId, auth.getName()));
     }
 
-    // ✅ Vote on a poll (returns updated poll info)
+    //  Vote on a poll (returns updated poll info)
     @PostMapping("/{pollId}/vote")
     public ResponseEntity<?> vote(
             @PathVariable Long pollId,
@@ -70,7 +70,7 @@ public class PollController {
         }
     }
 
-    // ✅ Delete a poll (Admin only)
+    //  Delete a poll (Admin only)
     @DeleteMapping("/{pollId}")
     public ResponseEntity<Void> deletePoll(@PathVariable Long pollId, Authentication auth) {
         pollService.deletePoll(pollId, auth.getName());

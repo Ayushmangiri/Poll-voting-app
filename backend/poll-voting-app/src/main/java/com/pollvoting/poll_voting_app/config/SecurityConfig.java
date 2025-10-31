@@ -33,16 +33,12 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Public routes
                         .requestMatchers("/api/auth/**").permitAll()
 
-                        // Allow public to see polls (GET)
                         .requestMatchers("/api/polls", "/api/polls/**").permitAll()
 
-                        // Voting requires authentication
                         .requestMatchers("/api/polls/**/vote").authenticated()
 
-                        // Everything else requires login
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

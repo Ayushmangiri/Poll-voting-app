@@ -22,7 +22,7 @@ public class PollService {
     private final PollOptionRepository pollOptionRepository;
     private final UserRepository userRepository;
 
-    // ✅ 1. Create a new poll (Admin only)
+    //  1. Create a new poll (Admin only)
     @Transactional
     public PollResponse createPoll(PollRequest request, String userEmail) {
         User user = userRepository.findByEmail(userEmail)
@@ -56,7 +56,7 @@ public class PollService {
         return toPollResponse(poll, user);
     }
 
-    // ✅ 2. Get all polls
+    //  2. Get all polls
     public List<PollResponse> getAllPolls(String userEmail) {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -67,7 +67,7 @@ public class PollService {
                 .collect(Collectors.toList());
     }
 
-    // ✅ 3. Get a single poll
+    //  3. Get a single poll
     public PollResponse getPollById(Long pollId, String userEmail) {
         User user = userRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -78,7 +78,7 @@ public class PollService {
         return toPollResponse(poll, user);
     }
 
-    // ✅ 4. Vote on a poll
+    //  4. Vote on a poll
     @Transactional
     public PollResponse vote(Long pollId, VoteRequest request, String userEmail) {
         User user = userRepository.findByEmail(userEmail)
@@ -124,7 +124,7 @@ public class PollService {
         return toPollResponse(updatedPoll, user);
     }
 
-    // ✅ 5. Update poll (Admin only)
+    //  5. Update poll (Admin only)
     @Transactional
     public PollResponse updatePoll(Long pollId, PollRequest request, String userEmail) {
         User user = userRepository.findByEmail(userEmail)
@@ -152,7 +152,7 @@ public class PollService {
         return toPollResponse(poll, user);
     }
 
-    // ✅ 6. Close poll (Admin only)
+    //  6. Close poll (Admin only)
     @Transactional
     public PollResponse closePoll(Long pollId, String userEmail) {
         User user = userRepository.findByEmail(userEmail)
@@ -171,7 +171,7 @@ public class PollService {
         return toPollResponse(poll, user);
     }
 
-    // ✅ 7. Delete poll (Admin only)
+    //  7. Delete poll (Admin only)
     @Transactional
     public void deletePoll(Long pollId, String userEmail) {
         User user = userRepository.findByEmail(userEmail)
@@ -184,7 +184,7 @@ public class PollService {
         pollRepository.deleteById(pollId);
     }
 
-    // ✅ 8. Automatically close expired polls
+    //  8. Automatically close expired polls
     @Scheduled(fixedRate = 60000)
     @Transactional
     public void closeExpiredPolls() {
@@ -197,7 +197,7 @@ public class PollService {
         });
     }
 
-    // ✅ 9. Mapper methods
+    //  9. Mapper methods
     private PollResponse toPollResponse(Poll poll, User user) {
         PollResponse response = new PollResponse();
         response.setId(poll.getId());
