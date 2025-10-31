@@ -1,4 +1,4 @@
-package com.pollvoting.poll_voting_app.dto;
+package com.pollvoting.poll_voting_app.repository;
 
 import com.pollvoting.poll_voting_app.entity.PollOption;
 import org.springframework.data.jpa.repository.JpaRepository;

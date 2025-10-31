@@ -1,6 +1,4 @@
 package com.pollvoting.poll_voting_app.entity;
-
-
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,7 +7,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "poll_options")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class PollOption {
@@ -30,5 +29,18 @@ public class PollOption {
 
     public int getVoteCount() {
         return voters != null ? voters.size() : 0;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PollOption)) return false;
+        PollOption that = (PollOption) o;
+        return id != null && id.equals(that.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }
